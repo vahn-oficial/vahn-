@@ -54,11 +54,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .img-container{width:70%;margin:0 auto 20px auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.8);background:var(--in);aspect-ratio:2/3}
 .detail-img{width:100%;height:100%;object-fit:cover;display:block}
 .detail-info-title{text-align:center;margin-bottom:15px}.detail-info-title h1{font-size:1.5rem;text-transform:uppercase;color:var(--text)}
-.action-btn-dl{margin-bottom:20px;width:100%}.btn-dl{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:16px;border-radius:12px;font-weight:bold;font-size:1.05rem;border:none}
 .detail-info-desc{margin-bottom:20px;text-align:left}.detail-info-desc p{color:var(--muted);font-size:.95rem;line-height:1.6;white-space:pre-wrap}
-.ad-top{display:flex;justify-content:center;align-items:center;width:100%;height:50px;margin-bottom:16px;overflow:hidden}
-.ad-bottom{display:flex;justify-content:center;align-items:center;width:100%;height:250px;margin:20px 0;overflow:hidden}
-.action-btn-share{display:flex;flex-direction:column;gap:12px;margin-top:10px;width:100%}.btn-share{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--in);color:var(--text);text-decoration:none;padding:16px;border-radius:12px;font-weight:bold;font-size:1rem;border:none;cursor:pointer;width:100%}.msg{text-align:center;color:var(--muted);padding:40px 0;width:100%}
+.ad-top{display:flex;justify-content:center;align-items:center;width:100%;height:250px;margin-bottom:16px;overflow:hidden}
+.ad-bottom{display:flex;justify-content:center;align-items:center;width:100%;height:50px;margin:0 0 20px 0;overflow:hidden}
+.action-btn-dl{margin-bottom:20px;width:100%}.btn-dl{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:16px;border-radius:12px;font-weight:bold;font-size:1.05rem;border:none}
+.action-btn-share{display:flex;flex-direction:column;gap:12px;margin-top:10px;width:100%}.btn-share{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--in);color:var(--text);text-decoration:none;padding:16px;border-radius:12px;font-weight:bold;font-size:1rem;border:none;cursor:pointer;width:100%}
+.msg{text-align:center;color:var(--muted);padding:40px 0;width:100%}
 #ageGate{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;padding:20px}
 .age-box{background:var(--card);padding:30px 20px;border-radius:16px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.05);box-shadow:0 10px 30px rgba(0,0,0,.8)}
 .age-box h2{font-size:1.5rem;margin-bottom:10px;color:#fff;text-transform:uppercase}
@@ -70,13 +71,45 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 </style>
 </head>
 <body>
-<div class="overlay" id="sideOverlay"></div>
+  <div class="overlay" id="sideOverlay"></div>
 <div class="sidebar" id="sidebar"><div class="sidebar-header"><h3><i class="fa-solid fa-house"></i></h3><button class="close-btn" id="closeSide"><i class="fa-solid fa-xmark"></i></button></div><button class="btn-all" id="btnAll"><i class="fa-solid fa-house"></i> Inicio</button><div class="cat-title">Categorías</div><div id="categoryList"></div></div>
 <div id="ageGate"><div class="age-box"><h2>Contenido Adulto</h2><p>Este sitio web contiene material para adultos. Para continuar, debes confirmar que tienes al menos 18 años de edad.</p><div class="age-btns"><button class="btn-age-yes" id="btnAgeYes">Sí, soy mayor de 18 años</button><a href="https://www.google.com" class="btn-age-no">No, salir</a></div></div></div>
 <header><div class="h-left"><button class="menu-btn" id="openSide"><i class="fa-solid fa-bars"></i></button><div class="logo">Vahn</div></div><div class="h-right"><button class="icon-btn btn-outline" id="themeBtn"><i class="fa-regular fa-sun" id="themeIcon"></i></button><button class="icon-btn btn-solid" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button></div></header>
 <div class="search-bar" id="searchBar"><input type="text" id="searchInput" placeholder="Buscar videojuego..."></div>
 <div id="mainContent"><div class="home-section" id="secHero"><div class="hero-carousel" id="heroCarousel"></div></div><div class="home-section" id="secRecientes"><div class="section-title">Recién Agregados</div><div class="row-carousel" id="rowRecientes"></div></div><h2 id="categoryTitle"></h2><div class="section-title">Catálogo Completo</div><div class="grid-carousel" id="rowTodos"></div><div class="pagination" id="pagination"></div><div class="footer-logo"><div class="footer-title">Vahn <span class="footer-box">V</span></div><div class="footer-sub"><i class="fa-solid fa-heart"></i> By fans for fans</div></div></div>
-<div id="gameDetail"><div class="detail-nav"><button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-left"></i></button><span id="dTitleNav">Cargando...</span></div><div class="detail-content"><div class="ad-top" id="ad-top-container"></div><div class="img-container"><img id="dImg" class="detail-img" src=""></div><div class="detail-info-title"><h1 id="dTitle"></h1></div><div class="action-btn-dl"><a id="dLink" class="btn-dl" target="_blank"><i class="fa-solid fa-download"></i> Descargar Juego</a></div><div class="detail-info-desc"><p id="dDesc"></p></div><div class="action-btn-share"><button id="shareBtn" class="btn-share"><i class="fa-solid fa-share-nodes"></i> <span id="shareText">Compartir este Juego</span></button></div><div class="ad-bottom" id="ad-bottom-container"></div></div></div>
+
+<!-- VISTA DETALLE DEL JUEGO CORREGIDA -->
+<div id="gameDetail">
+    <div class="detail-nav">
+        <button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-left"></i></button>
+        <span id="dTitleNav">Cargando...</span>
+    </div>
+    <div class="detail-content">
+        
+        <!-- 1. Anuncio Grande Arriba -->
+        <div class="ad-top" id="ad-top-container"></div>
+
+        <!-- 2. Imagen -->
+        <div class="img-container"><img id="dImg" class="detail-img" src=""></div>
+        
+        <!-- 3. Título -->
+        <div class="detail-info-title"><h1 id="dTitle"></h1></div>
+        
+        <!-- 4. Anuncio Pequeño -->
+        <div class="ad-bottom" id="ad-bottom-container"></div>
+
+        <!-- 5. Botón de Descarga -->
+        <div class="action-btn-dl"><a id="dLink" class="btn-dl" target="_blank"><i class="fa-solid fa-download"></i> Descargar Juego</a></div>
+
+        <!-- 6. Descripción -->
+        <div class="detail-info-desc"><p id="dDesc"></p></div>
+        
+        <!-- 7. Botón Compartir -->
+        <div class="action-btn-share"><button id="shareBtn" class="btn-share"><i class="fa-solid fa-share-nodes"></i> <span id="shareText">Compartir este Juego</span></button></div>
+        
+    </div>
+</div>
+
 <script type="text/javascript" src="https://pl31891805.profitableratecpmnetwork.com/35/b0/bd/35b0bd6d388d38f80634e7051142ff5e.js"></script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -107,8 +140,13 @@ const s=document.createElement('span');s.style.color='var(--text)';s.style.fontS
 const n=document.createElement('button');n.className='page-btn';n.innerHTML='Siguiente <i class="fa-solid fa-chevron-right"></i>';n.disabled=cP===tP;n.onclick=()=>{cP++;uUI(allG);document.getElementById('rowTodos').scrollIntoView({behavior:'smooth'})};pE.appendChild(n)}
 function aJ(j){
 cId=j.id;dI.src=j.portada?j.portada:dImg;dT.textContent=j.titulo||'Sin título';dTN.textContent=j.titulo||'Juego';dD.textContent=j.descripcion||'Sin descripción';dL.href=j.link||'#';sT.textContent="Compartir este Juego";
-const aT=document.getElementById('ad-top-container');aT.innerHTML='';const iT=document.createElement('iframe');iT.style.width='320px';iT.style.height='50px';iT.style.border='none';aT.appendChild(iT);const dTi=iT.contentWindow.document;dTi.open();dTi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '2495b9337539202227cb9195a6ab2b97', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/2495b9337539202227cb9195a6ab2b97/invoke.js"><\/script></body></html>`);dTi.close();
-const aB=document.getElementById('ad-bottom-container');aB.innerHTML='';const iB=document.createElement('iframe');iB.style.width='300px';iB.style.height='250px';iB.style.border='none';aB.appendChild(iB);const dBi=iB.contentWindow.document;dBi.open();dBi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);dBi.close();
+
+// Anuncio Grande (300x250)
+const aT=document.getElementById('ad-top-container');aT.innerHTML='';const iT=document.createElement('iframe');iT.style.width='300px';iT.style.height='250px';iT.style.border='none';aT.appendChild(iT);const dTi=iT.contentWindow.document;dTi.open();dTi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);dTi.close();
+
+// Anuncio Pequeño (320x50)
+const aB=document.getElementById('ad-bottom-container');aB.innerHTML='';const iB=document.createElement('iframe');iB.style.width='320px';iB.style.height='50px';iB.style.border='none';aB.appendChild(iB);const dBi=iB.contentWindow.document;dBi.open();dBi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '2495b9337539202227cb9195a6ab2b97', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/2495b9337539202227cb9195a6ab2b97/invoke.js"><\/script></body></html>`);dBi.close();
+
 gD.classList.add('active');document.body.style.overflow='hidden'}
 function cJ(){gD.classList.remove('active');document.body.style.overflow='auto';if(window.location.search.includes('?juego='))window.history.replaceState(null,'',window.location.pathname)}
 document.getElementById('btnBack').onclick=cJ;
@@ -116,4 +154,4 @@ sB.onclick=async()=>{if(!cId)return;const u=window.location.origin+window.locati
 load();
 </script>
 </body>
-</html>
+  </html>
