@@ -98,10 +98,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .ad-middle-home {display: flex;justify-content: center;align-items: center;width: 100%;height: 50px;margin: 10px 0 20px 0;overflow: hidden;}
 .ad-bottom-home {display: flex;justify-content: center;align-items: center;width: 100%;height: 250px;margin: 10px 0 20px 0;overflow: hidden;}
 
-/* NUEVOS CONTENEDORES EXCLUSIVOS PARA CATEGORÍAS */
+/* Anuncios de categorías */
 .ad-category-top {display: none; justify-content: center; align-items: center; width: 100%; height: 50px; margin: 10px 0; overflow: hidden;}
 .ad-category-bottom {display: none; justify-content: center; align-items: center; width: 100%; height: 250px; margin: 20px 0; overflow: hidden;}
-.show-cat-ad { display: flex !important; } /* Clase para mostrarlos */
+.show-cat-ad { display: flex !important; }
 
 #loadingOverlay {position: fixed; inset: 0; background: #050505; z-index: 9998; display: none; align-items: center; justify-content: center;}
 #loadingOverlay.active { display: flex; }
@@ -130,19 +130,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
     <div class="home-section ad-middle-home" id="ad-middle-container"></div>
     
     <h2 id="categoryTitle"></h2>
-    <!-- Anuncio arriba del catálogo de categoría -->
     <div class="ad-category-top" id="ad-cat-top"></div>
 
     <div class="section-title">Catálogo Completo</div>
     <div class="grid-carousel" id="rowTodos"></div>
     <div class="pagination" id="pagination"></div>
     
-    <!-- Anuncio abajo del catálogo de categoría -->
     <div class="ad-category-bottom" id="ad-cat-bottom"></div>
 
     <div class="home-section ad-bottom-home" id="ad-bottom-home-container"></div>
     <div class="footer-logo"><div class="footer-title">Vahn <span class="footer-box">V</span></div><div class="footer-sub"><i class="fa-solid fa-heart"></i> By fans for fans</div></div>
 </div>
+
+<!-- VISTA DETALLE DEL JUEGO CON EL NUEVO ANUNCIO INTERMEDIO -->
 <div id="gameDetail">
     <div class="detail-nav">
         <button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-left"></i></button>
@@ -154,15 +154,21 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
         <div class="detail-info-title"><h1 id="dTitle"></h1></div>
         <div class="detail-info-desc"><p id="dDesc"></p></div>
         <div class="spoiler-gallery" id="spoilerGallery"></div>
+        
         <div class="ad-bottom" id="ad-bottom-container"></div>
+        
         <div class="action-btn-dl"><button id="downloadBtn" class="btn-dl"><i class="fa-solid fa-download"></i> Descargar Juego</button></div>
+        
+        <!-- EL NUEVO ANUNCIO GRANDE ENTRE LOS BOTONES -->
+        <div class="ad-bottom" id="ad-share-container"></div>
+
         <div class="action-btn-share"><button id="shareBtn" class="btn-share"><i class="fa-solid fa-share-nodes"></i> <span id="shareText">Compartir este Juego</span></button></div>
     </div>
 </div>
 <div id="loadingOverlay"><div class="spinner"></div></div>
 
 <!-- Pega aquí la Parte 2 -->
-  <script type="text/javascript" src="https://pl31891805.profitableratecpmnetwork.com/35/b0/bd/35b0bd6d388d38f80634e7051142ff5e.js"></script>
+    <script type="text/javascript" src="https://pl31891805.profitableratecpmnetwork.com/35/b0/bd/35b0bd6d388d38f80634e7051142ff5e.js"></script>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import{getFirestore,collection,getDocs,orderBy,query}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -208,7 +214,7 @@ function loadBottomHomeAd(){
     d.close();
 }
 
-// --- FUNCIONES DE LOS NUEVOS ANUNCIOS DE CATEGORÍA ---
+// --- FUNCIONES DE LOS ANUNCIOS DE CATEGORÍA ---
 function loadCatTopAd(){
     const c=document.getElementById('ad-cat-top');
     c.innerHTML='';
@@ -247,7 +253,6 @@ function showHome(){
     document.getElementById('ad-middle-container').classList.remove('hide-section');
     document.getElementById('ad-bottom-home-container').classList.remove('hide-section');
     
-    // Ocultar anuncios de categoría
     const catTop = document.getElementById('ad-cat-top');
     const catBottom = document.getElementById('ad-cat-bottom');
     catTop.classList.remove('show-cat-ad');
@@ -277,7 +282,6 @@ document.getElementById('searchInput').oninput=(e)=>{
         document.getElementById('ad-middle-container').classList.add('hide-section');
         document.getElementById('ad-bottom-home-container').classList.add('hide-section');
         
-        // Mostrar anuncios de categoría al buscar
         const catTop = document.getElementById('ad-cat-top');
         const catBottom = document.getElementById('ad-cat-bottom');
         catTop.classList.add('show-cat-ad');
@@ -292,7 +296,6 @@ document.getElementById('searchInput').oninput=(e)=>{
         document.getElementById('ad-middle-container').classList.remove('hide-section');
         document.getElementById('ad-bottom-home-container').classList.remove('hide-section');
         
-        // Ocultar anuncios de categoría
         document.getElementById('ad-cat-top').classList.remove('show-cat-ad');
         document.getElementById('ad-cat-bottom').classList.remove('show-cat-ad');
         document.getElementById('ad-cat-top').innerHTML = '';
@@ -338,7 +341,6 @@ function gC(){
             document.getElementById('ad-middle-container').classList.add('hide-section');
             document.getElementById('ad-bottom-home-container').classList.add('hide-section');
             
-            // Mostrar y cargar anuncios de categoría
             const catTop = document.getElementById('ad-cat-top');
             const catBottom = document.getElementById('ad-cat-bottom');
             catTop.classList.add('show-cat-ad');
@@ -454,17 +456,26 @@ function aJ(j){
         downloadBtn.style.color='#000';
         downloadBtn.disabled=false;
 
+        // Anuncio 1 (Arriba del juego)
         const aT=document.getElementById('ad-top-container');aT.innerHTML='';
         const iT=document.createElement('iframe');iT.style.width='320px';iT.style.height='50px';iT.style.border='none';aT.appendChild(iT);
         const dTi=iT.contentWindow.document;dTi.open();
         dTi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '2495b9337539202227cb9195a6ab2b97', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/2495b9337539202227cb9195a6ab2b97/invoke.js"><\/script></body></html>`);
         dTi.close();
 
+        // Anuncio 2 (Debajo de las imágenes)
         const aB=document.getElementById('ad-bottom-container');aB.innerHTML='';
         const iB=document.createElement('iframe');iB.style.width='300px';iB.style.height='250px';iB.style.border='none';aB.appendChild(iB);
         const dBi=iB.contentWindow.document;dBi.open();
         dBi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);
         dBi.close();
+
+        // Anuncio 3 (Entre Descargar y Compartir)
+        const aS=document.getElementById('ad-share-container');aS.innerHTML='';
+        const iS=document.createElement('iframe');iS.style.width='300px';iS.style.height='250px';iS.style.border='none';aS.appendChild(iS);
+        const dSi=iS.contentWindow.document;dSi.open();
+        dSi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);
+        dSi.close();
 
         gD.classList.add('active');
         document.body.style.overflow='hidden';
@@ -525,5 +536,4 @@ sB.onclick=async()=>{
 load();
 </script>
 </body>
-  </html>
-  
+    </html>
