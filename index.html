@@ -74,8 +74,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .detail-info-desc{margin-bottom:20px;text-align:left}.detail-info-desc p{color:var(--muted);font-size:.95rem;line-height:1.6;white-space:pre-wrap}
 .spoiler-gallery{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
 .spoiler-gallery img{width:100%;border-radius:12px;object-fit:cover;box-shadow:0 4px 10px rgba(0,0,0,.5)}
+
+/* Anuncio pequeño arriba de la imagen */
 .ad-top{display:flex;justify-content:center;align-items:center;width:100%;height:50px;margin-bottom:16px;overflow:hidden}
-.ad-bottom{display:flex;justify-content:center;align-items:center;width:100%;height:250px;margin:0 0 20px 0;overflow:hidden}
+
+/* Anuncio grande (arriba del botón de descarga) */
+.ad-bottom{display:flex;justify-content:center;align-items:center;width:100%;min-height:250px;margin:0 0 20px 0;overflow:hidden}
+
 .action-row { display: flex; gap: 10px; width: 100%; margin-bottom: 20px; }
 .btn-dl { flex: 1; display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; color:#000; text-decoration:none; padding:16px; border-radius:12px; font-weight:bold; font-size:1.05rem; border:none; cursor:pointer; transition:opacity 0.2s; }
 .btn-dl:hover { opacity:0.9; }
@@ -91,9 +96,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 .btn-age-no{background:var(--in);color:var(--muted);text-decoration:none;padding:15px;border-radius:8px;font-weight:bold;font-size:1rem;display:block;text-align:center}
 .hidden-gate{display:none!important}
 
-.ad-middle-home {display: flex;justify-content: center;align-items: center;width: 100%;height: 250px;margin: 10px 0 20px 0;overflow: hidden;}
-
-/* NUEVA SECCIÓN DE SUGERENCIAS EN EL JUEGO */
 .suggestions-section { padding: 10px 0 20px 0; border-top: 1px solid rgba(128,128,128,.1); margin-top: 10px; }
 .suggestions-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-left: 4px; }
 .suggestions-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 12px; padding-bottom: 10px; }
@@ -126,7 +128,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 <div id="mainContent">
     <div class="home-section" id="secHero"><div class="hero-carousel" id="heroCarousel"></div></div>
     <div class="home-section" id="secRecientes"><div class="section-title">Recién Agregados</div><div class="row-carousel" id="rowRecientes"></div></div>
-    <div class="home-section ad-middle-home" id="ad-middle-container"></div>
     
     <h2 id="categoryTitle"></h2>
     <div class="section-title">Catálogo Completo</div>
@@ -142,27 +143,32 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
         <span id="dTitleNav">Cargando...</span>
     </div>
     <div class="detail-content">
+        <!-- 1. Anuncio Pequeño Arriba -->
         <div class="ad-top" id="ad-top-container"></div>
+
         <div class="img-container"><img id="dImg" class="detail-img" src=""></div>
         <div class="detail-info-title"><h1 id="dTitle"></h1></div>
         <div class="detail-info-desc"><p id="dDesc"></p></div>
         <div class="spoiler-gallery" id="spoilerGallery"></div>
         
+        <!-- 2. Anuncio Grande (Arriba del botón) -->
         <div class="ad-bottom" id="ad-bottom-container"></div>
-        
+
         <div class="action-row">
             <button id="downloadBtn" class="btn-dl"><i class="fa-solid fa-download"></i> Descargar Juego</button>
             <button id="shareBtn" class="btn-share-square" title="Compartir"><i class="fa-solid fa-share-nodes"></i></button>
         </div>
         
-        <div class="ad-bottom" id="ad-share-container"></div>
+        <!-- 3. Banner Nativo (Abajo del botón) -->
+        <div class="ad-bottom" id="ad-share-container">
+            <script async="async" data-cfasync="false" src="https://bauval.org/21/91957c5be92876d99dcaa563c8c99555"></script>
+            <div id="container-91957c5be92876d99dcaa563c8c99555"></div>
+        </div>
 
-        <!-- NUEVO APARTADO DE SUGERENCIAS -->
         <div class="suggestions-section">
             <div class="suggestions-title">Sugerencias de juegos</div>
             <div class="suggestions-row" id="suggestionsRow"></div>
         </div>
-
     </div>
 </div>
 <div id="loadingOverlay"><div class="spinner"></div></div>
@@ -189,19 +195,6 @@ const gD=document.getElementById('gameDetail'),dI=document.getElementById('dImg'
 let allG=[],cId=null,cP=1,currentDownloadLink='',countdownInterval=null;
 const iPP=6,dImg="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=400&auto=format&fit=crop";
 
-// --- FUNCIONES DE LOS ANUNCIOS ---
-function loadMiddleAd(){
-    const c=document.getElementById('ad-middle-container');
-    c.innerHTML='';
-    const i=document.createElement('iframe');
-    i.style.width='300px';i.style.height='250px';i.style.border='none';
-    c.appendChild(i);
-    const d=i.contentWindow.document;
-    d.open();
-    d.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);
-    d.close();
-}
-
 // --- LÓGICA DE LA PÁGINA ---
 document.getElementById('openSide').onclick=()=>{sB2.classList.add('open');sO.classList.add('open')};
 document.getElementById('closeSide').onclick=cS;
@@ -213,7 +206,6 @@ function showHome(){
     cT.style.display='none';cT.textContent='';
     document.getElementById('secHero').classList.remove('hide-section');
     document.getElementById('secRecientes').classList.remove('hide-section');
-    document.getElementById('ad-middle-container').classList.remove('hide-section');
     uUI(allG);cS()
 }
 
@@ -233,12 +225,10 @@ document.getElementById('searchInput').oninput=(e)=>{
     if(t.length>0){
         document.getElementById('secHero').classList.add('hide-section');
         document.getElementById('secRecientes').classList.add('hide-section');
-        document.getElementById('ad-middle-container').classList.add('hide-section');
         cT.style.display='block';cT.textContent='Búsqueda: '+t;
     }else{
         document.getElementById('secHero').classList.remove('hide-section');
         document.getElementById('secRecientes').classList.remove('hide-section');
-        document.getElementById('ad-middle-container').classList.remove('hide-section');
         cT.style.display='none';
     }
     uUI(f)
@@ -256,7 +246,6 @@ async function load(){
         allG=sn.docs.map(d=>({id:d.id,...d.data()}));
         gC();
         uUI(allG);
-        loadMiddleAd();
         const u=new URLSearchParams(window.location.search).get('juego');
         if(u){const e=allG.find(g=>g.id===u);if(e)aJ(e)}
     }catch(e){
@@ -275,7 +264,6 @@ function gC(){
             const f=allG.filter(g=>(g.etiquetas||'').includes(t));cP=1;
             document.getElementById('secHero').classList.add('hide-section');
             document.getElementById('secRecientes').classList.add('hide-section');
-            document.getElementById('ad-middle-container').classList.add('hide-section');
             cT.style.display='block';cT.textContent=t;
             uUI(f);cS();
         };
@@ -337,39 +325,26 @@ function aJ(j){
     setTimeout(()=>{
         cId=j.id;dI.src=j.portada?j.portada:dImg;dT.textContent=j.titulo||'Sin título';dTN.textContent=j.titulo||'Juego';dD.textContent=j.descripcion||'Sin descripción';currentDownloadLink=j.link||'#';
         
-        // Cargar Spoilers
         sG.innerHTML='';if(j.spoilers){const a=j.spoilers.split(',');a.forEach(u=>{if(u.trim()){const i=document.createElement('img');i.src=u.trim();i.loading='lazy';i.alt='Spoiler';sG.appendChild(i)}})}
 
-        // Restaurar Botón
         if(countdownInterval)clearInterval(countdownInterval);
         downloadBtn.innerHTML='<i class="fa-solid fa-download"></i> Descargar Juego';downloadBtn.style.background='#fff';downloadBtn.style.color='#000';downloadBtn.disabled=false;
         
-        // Anuncio 1 (Arriba)
+        // Anuncio 1 (Arriba del juego)
         const aT=document.getElementById('ad-top-container');aT.innerHTML='';const iT=document.createElement('iframe');iT.style.width='320px';iT.style.height='50px';iT.style.border='none';aT.appendChild(iT);const dTi=iT.contentWindow.document;dTi.open();dTi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '2495b9337539202227cb9195a6ab2b97', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/2495b9337539202227cb9195a6ab2b97/invoke.js"><\/script></body></html>`);dTi.close();
         
-        // Anuncio 2 (Debajo de imágenes)
+        // Anuncio 2 (Grande, arriba del botón)
         const aB=document.getElementById('ad-bottom-container');aB.innerHTML='';const iB=document.createElement('iframe');iB.style.width='300px';iB.style.height='250px';iB.style.border='none';aB.appendChild(iB);const dBi=iB.contentWindow.document;dBi.open();dBi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);dBi.close();
-        
-        // Anuncio 3 (Abajo de botones)
-        const aS=document.getElementById('ad-share-container');aS.innerHTML='';const iS=document.createElement('iframe');iS.style.width='300px';iS.style.height='250px';iS.style.border='none';aS.appendChild(iS);const dSi=iS.contentWindow.document;dSi.open();dSi.write(`<html><head><style>body{margin:0;display:flex;justify-content:center;align-items:center;}</style></head><body><script type="text/javascript">atOptions = { 'key' : '08157240a7221626e752c94138bd22e1', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };<\/script><script type="text/javascript" src="https://www.highrevenueformat.com/08157240a7221626e752c94138bd22e1/invoke.js"><\/script></body></html>`);dSi.close();
 
-        // --- LÓGICA DE SUGERENCIAS ---
+        // Sugerencias
         suggRow.innerHTML = '';
-        // Filtramos la lista para no mostrar el juego actual y tomamos los 5 primeros
         const sugeridos = allG.filter(g => g.id !== cId).slice(0, 5);
         sugeridos.forEach(sug => {
             const p = sug.portada ? sug.portada : dImg;
             const card = document.createElement('div');
             card.className = 'sug-card';
-            card.innerHTML = `
-                <img src="${p}" loading="lazy" alt="${sug.titulo}">
-                <div class="sug-title">${sug.titulo || 'Sin título'}</div>
-            `;
-            card.onclick = () => {
-                // Al tocar una sugerencia, cerramos el juego actual y abrimos el nuevo
-                cJ(); 
-                setTimeout(() => aJ(sug), 100); 
-            };
+            card.innerHTML = `<img src="${p}" loading="lazy" alt="${sug.titulo}"><div class="sug-title">${sug.titulo || 'Sin título'}</div>`;
+            card.onclick = () => { cJ(); setTimeout(() => aJ(sug), 100); };
             suggRow.appendChild(card);
         });
 
@@ -400,4 +375,4 @@ sB.onclick=async()=>{
 load();
 </script>
 </body>
-</html>
+    </html>
